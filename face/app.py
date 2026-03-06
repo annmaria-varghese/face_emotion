@@ -3,13 +3,13 @@ import cv2
 import numpy as np
 from tensorflow.keras.models import load_model
 
-# Load emotion model
+# Load model
 model = load_model("emotion_model.hdf5", compile=False)
 
 # Emotion labels
 emotions = ["Angry","Disgust","Fear","Happy","Sad","Surprise","Neutral"]
 
-# Load face detector
+# Face detector
 face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 
 st.title("Face Emotion Recognition")
@@ -47,17 +47,16 @@ if option == "Upload Image":
 
         st.image(cv2.cvtColor(img,cv2.COLOR_BGR2RGB))
 
-
-# ---------------- LIVE CAMERA ---------------- #
+# ---------------- CAMERA ---------------- #
 
 if option == "Use Camera":
 
-    start = st.checkbox("Start Camera")
+    run = st.checkbox("Start Camera")
 
-    frame_window = st.image([])
+    FRAME_WINDOW = st.image([])
     camera = cv2.VideoCapture(0)
 
-    while start:
+    while run:
 
         ret, frame = camera.read()
         if not ret:
@@ -82,6 +81,6 @@ if option == "Use Camera":
             cv2.putText(frame,emotion,(x,y-10),
                         cv2.FONT_HERSHEY_SIMPLEX,0.9,(0,255,0),2)
 
-        frame_window.image(cv2.cvtColor(frame,cv2.COLOR_BGR2RGB))
+        FRAME_WINDOW.image(cv2.cvtColor(frame,cv2.COLOR_BGR2RGB))
 
     camera.release()
